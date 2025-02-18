@@ -13,7 +13,6 @@ dist-ssr
 *.local
 package-lock.json
 src/firebase.js
-src/firebase.js
 
 # Editor directories and files
 .vscode/*
@@ -26,3 +25,6 @@ src/firebase.js
 *.sln
 *.sw?
 .cursor/
+
+# 환경 변수 파일 보호
+.env
