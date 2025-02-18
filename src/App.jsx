@@ -14,7 +14,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/post/:id" element={<Post />} />
-          <Route path="/write/:id" element={<Write />} />
+          <Route path="/write" element={<Write />} />
+          <Route path="/write/:id" element={<Write />} /> {/* 수정 기능 추가 */}
           {/* <Route path="/login" element={<Login />} /> */}
         </Routes>
       </main>

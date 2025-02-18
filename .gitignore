@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 package-lock.json
+src/firebase.js
+src/firebase.js
 
 # Editor directories and files
 .vscode/*

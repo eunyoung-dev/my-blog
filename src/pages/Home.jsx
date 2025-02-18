@@ -1,12 +1,22 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase"; // Firestore 불러오기
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    setPosts(savedPosts);
+    const fetchPosts = async () => {
+      const querySnapshot = await getDocs(collection(db, "posts"));
+      const postList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPosts(postList);
+    };
+
+    fetchPosts();
   }, []);
 
   return (
@@ -14,20 +24,17 @@ const Home = () => {
       <h1 className="text-3xl font-bold mb-4">Latest Posts</h1>
       <ul>
         {posts.length > 0 ? (
-          posts.map((post, index) => (
-            <li key={index} className="border p-4 rounded-md mb-2">
+          posts.map((post) => (
+            <li key={post.id} className="border p-4 rounded-md mb-2">
               <h2 className="text-xl font-semibold">
                 <Link
-                  to={`/post/${index}`}
+                  to={`/post/${post.id}`}
                   className="text-blue-500 hover:underline"
                 >
                   {post.title}
                 </Link>
               </h2>
               <p className="text-gray-600">{post.content.slice(0, 50)}...</p>
-              <p className="text-sm text-gray-400">
-                {new Date(post.date).toLocaleString()}
-              </p>
             </li>
           ))
         ) : (
